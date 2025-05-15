@@ -26,3 +26,4 @@ public class Mago extends Personaje {
     }
 }
 
+/* hola 
