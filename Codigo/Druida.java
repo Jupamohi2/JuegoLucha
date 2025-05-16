@@ -1,8 +1,8 @@
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Mago extends Personaje {
-    public Mago(String nombre, Arma arma, Armadura armadura) {
+public class Druida extends Personaje {
+    public Druida(String nombre, Arma arma, Armadura armadura) {
         super(nombre, arma, armadura, Arrays.asList(
             new Ataque("Bola de Fuego", 19, 0.25, 2.0),
             new Ataque("Rayo Helado", 16, 0.35, 1.7),
@@ -43,28 +43,28 @@ public class Mago extends Personaje {
         System.out.println("\u001B[31m" + oponente.getNombre() + " ahora tiene " + oponente.getPuntosDeVida() + "/" + oponente.getVidaMaxima() + " puntos de vida.\u001B[0m");
     }
 
-    public static class MagoBuilder {
+    public static class DruidaBuilder {
         private String nombre;
         private Arma arma;
         private Armadura armadura;
 
-        public MagoBuilder conNombre(String nombre) {
+        public DruidaBuilder conNombre(String nombre) {
             this.nombre = nombre;
             return this;
         }
 
-        public MagoBuilder conArma(Arma arma) {
+        public DruidaBuilder conArma(Arma arma) {
             this.arma = arma;
             return this;
         }
 
-        public MagoBuilder conArmadura(Armadura armadura) {
+        public DruidaBuilder conArmadura(Armadura armadura) {
             this.armadura = armadura;
             return this;
         }
 
-        public Mago build() {
-            return new Mago(nombre, arma, armadura);
+        public Druida build() {
+            return new Druida(nombre, arma, armadura);
         }
     }
 }

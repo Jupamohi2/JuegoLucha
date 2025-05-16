@@ -55,78 +55,78 @@ class JuegoLucha {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // Opciones predeterminadas para Guerrero
-        Arma[] armasGuerrero = {
+        // Opciones predeterminadas para Berserker
+        Arma[] armasBerserker = {
                 new Arma("Espada", 8),
                 new Arma("Hacha", 10),
                 new Arma("Lanza", 7)
         };
-        Armadura[] armadurasGuerrero = {
+        Armadura[] armadurasBerserker = {
                 new Armadura("Pesada", 12),
                 new Armadura("Ligera", 8),
                 new Armadura("Cota de malla", 10),
                 new Armadura("De metal", 11)
         };
-        // Opciones predeterminadas para Mago
-        Arma[] armasMago = {
+        // Opciones predeterminadas para Druida
+        Arma[] armasDruida = {
                 new Arma("Bastón mágico", 11),
                 new Arma("Varita", 9),
-                new Arma("Libro de hechizos", 10)
+                new Arma("Báculo de roble", 10)
         };
-        Armadura[] armadurasMago = {
-                new Armadura("Túnica", 3),
-                new Armadura("Capa mágica", 5),
+        Armadura[] armadurasDruida = {
+                new Armadura("Armadura de hojas", 3),
+                new Armadura("Túnica de piel", 5),
                 new Armadura("Escudo arcano", 7)
         };
 
         // --- JUGADOR 1 ---
         System.out.print("Introduce el nombre del jugador 1: ");
         String nombre1 = scanner.nextLine();
-        System.out.print("Elige el tipo de personaje para jugador 1 (1=Guerrero, 2=Mago): ");
+        System.out.print("Elige el tipo de personaje para jugador 1 (1=Berserker, 2=Druida): ");
         int tipo1 = scanner.nextInt();
         scanner.nextLine(); // Limpiar buffer
         Personaje jugador1;
         if (tipo1 == 2) {
-            // Mostrar armas mago
-            System.out.println("Opciones de arma para Mago:");
-            for (int i = 0; i < armasMago.length; i++) {
-                System.out.println((i + 1) + ". " + armasMago[i]);
+            // Mostrar armas druida
+            System.out.println("Opciones de arma para Druida:");
+            for (int i = 0; i < armasDruida.length; i++) {
+                System.out.println((i + 1) + ". " + armasDruida[i]);
             }
             System.out.print("Elige el arma: ");
             int armaIdx = scanner.nextInt() - 1;
-            // Mostrar armaduras mago
-            System.out.println("Opciones de armadura para Mago:");
-            for (int i = 0; i < armadurasMago.length; i++) {
-                System.out.println((i + 1) + ". " + armadurasMago[i]);
+            // Mostrar armaduras druida
+            System.out.println("Opciones de armadura para Druida:");
+            for (int i = 0; i < armadurasDruida.length; i++) {
+                System.out.println((i + 1) + ". " + armadurasDruida[i]);
             }
             System.out.print("Elige la armadura: ");
             int armaduraIdx = scanner.nextInt() - 1;
             scanner.nextLine();
-            jugador1 = new Mago.MagoBuilder()
+            jugador1 = new Druida.DruidaBuilder()
                     .conNombre(nombre1)
-                    .conArma(armasMago[armaIdx])
-                    .conArmadura(armadurasMago[armaduraIdx])
+                    .conArma(armasDruida[armaIdx])
+                    .conArmadura(armadurasDruida[armaduraIdx])
                     .build();
         } else {
-            // Mostrar armas guerrero
-            System.out.println("Opciones de arma para Guerrero:");
-            for (int i = 0; i < armasGuerrero.length; i++) {
-                System.out.println((i + 1) + ". " + armasGuerrero[i]);
+            // Mostrar armas berserker
+            System.out.println("Opciones de arma para Berserker:");
+            for (int i = 0; i < armasBerserker.length; i++) {
+                System.out.println((i + 1) + ". " + armasBerserker[i]);
             }
             System.out.print("Elige el arma: ");
             int armaIdx = scanner.nextInt() - 1;
-            // Mostrar armaduras guerrero
-            System.out.println("Opciones de armadura para Guerrero:");
-            for (int i = 0; i < armadurasGuerrero.length; i++) {
-                System.out.println((i + 1) + ". " + armadurasGuerrero[i]);
+            // Mostrar armaduras berserker
+            System.out.println("Opciones de armadura para Berserker:");
+            for (int i = 0; i < armadurasBerserker.length; i++) {
+                System.out.println((i + 1) + ". " + armadurasBerserker[i]);
             }
             System.out.print("Elige la armadura: ");
             int armaduraIdx = scanner.nextInt() - 1;
             scanner.nextLine();
-            jugador1 = new Guerrero.GuerreroBuilder()
+            jugador1 = new Berserker.BerserkerBuilder()
                     .conNombre(nombre1)
-                    .conArma(armasGuerrero[armaIdx])
-                    .conArmadura(armadurasGuerrero[armaduraIdx])
+                    .conArma(armasBerserker[armaIdx])
+                    .conArmadura(armadurasBerserker[armaduraIdx])
                     .build();
         }
         // Decorar con mochila
@@ -135,51 +135,51 @@ class JuegoLucha {
         // --- JUGADOR 2 ---
         System.out.print("Introduce el nombre del jugador 2: ");
         String nombre2 = scanner.nextLine();
-        System.out.print("Elige el tipo de personaje para jugador 2 (1=Guerrero, 2=Mago): ");
+        System.out.print("Elige el tipo de personaje para jugador 2 (1=Berserker, 2=Druida): ");
         int tipo2 = scanner.nextInt();
         scanner.nextLine(); // Limpiar buffer
         Personaje jugador2;
         if (tipo2 == 2) {
-            // Mostrar armas mago
-            System.out.println("Opciones de arma para Mago:");
-            for (int i = 0; i < armasMago.length; i++) {
-                System.out.println((i + 1) + ". " + armasMago[i]);
+            // Mostrar armas druida
+            System.out.println("Opciones de arma para Druida:");
+            for (int i = 0; i < armasDruida.length; i++) {
+                System.out.println((i + 1) + ". " + armasDruida[i]);
             }
             System.out.print("Elige el arma: ");
             int armaIdx = scanner.nextInt() - 1;
-            // Mostrar armaduras mago
-            System.out.println("Opciones de armadura para Mago:");
-            for (int i = 0; i < armadurasMago.length; i++) {
-                System.out.println((i + 1) + ". " + armadurasMago[i]);
+            // Mostrar armaduras druida
+            System.out.println("Opciones de armadura para Druida:");
+            for (int i = 0; i < armadurasDruida.length; i++) {
+                System.out.println((i + 1) + ". " + armadurasDruida[i]);
             }
             System.out.print("Elige la armadura: ");
             int armaduraIdx = scanner.nextInt() - 1;
             scanner.nextLine();
-            jugador2 = new Mago.MagoBuilder()
+            jugador2 = new Druida.DruidaBuilder()
                     .conNombre(nombre2)
-                    .conArma(armasMago[armaIdx])
-                    .conArmadura(armadurasMago[armaduraIdx])
+                    .conArma(armasDruida[armaIdx])
+                    .conArmadura(armadurasDruida[armaduraIdx])
                     .build();
         } else {
-            // Mostrar armas guerrero
-            System.out.println("Opciones de arma para Guerrero:");
-            for (int i = 0; i < armasGuerrero.length; i++) {
-                System.out.println((i + 1) + ". " + armasGuerrero[i]);
+            // Mostrar armas berserker
+            System.out.println("Opciones de arma para Berserker:");
+            for (int i = 0; i < armasBerserker.length; i++) {
+                System.out.println((i + 1) + ". " + armasBerserker[i]);
             }
             System.out.print("Elige el arma: ");
             int armaIdx = scanner.nextInt() - 1;
-            // Mostrar armaduras guerrero
-            System.out.println("Opciones de armadura para Guerrero:");
-            for (int i = 0; i < armadurasGuerrero.length; i++) {
-                System.out.println((i + 1) + ". " + armadurasGuerrero[i]);
+            // Mostrar armaduras berserker
+            System.out.println("Opciones de armadura para Berserker:");
+            for (int i = 0; i < armadurasBerserker.length; i++) {
+                System.out.println((i + 1) + ". " + armadurasBerserker[i]);
             }
             System.out.print("Elige la armadura: ");
             int armaduraIdx = scanner.nextInt() - 1;
             scanner.nextLine();
-            jugador2 = new Guerrero.GuerreroBuilder()
+            jugador2 = new Berserker.BerserkerBuilder()
                     .conNombre(nombre2)
-                    .conArma(armasGuerrero[armaIdx])
-                    .conArmadura(armadurasGuerrero[armaduraIdx])
+                    .conArma(armasBerserker[armaIdx])
+                    .conArmadura(armadurasBerserker[armaduraIdx])
                     .build();
         }
         // Decorar con mochila

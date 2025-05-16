@@ -1,8 +1,8 @@
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Guerrero extends Personaje {
-    public Guerrero(String nombre, Arma arma, Armadura armadura) {
+public class Berserker extends Personaje {
+    public Berserker(String nombre, Arma arma, Armadura armadura) {
         super(nombre, arma, armadura, Arrays.asList(
             new Ataque("Golpe Poderoso", 15, 0.20, 2.0),
             new Ataque("Estocada Rápida", 10, 0.40, 1.5),
@@ -43,28 +43,28 @@ public class Guerrero extends Personaje {
         System.out.println("\u001B[31m" + oponente.getNombre() + " ahora tiene " + oponente.getPuntosDeVida() + "/" + oponente.getVidaMaxima() + " puntos de vida.\u001B[0m");
     }
 
-    public static class GuerreroBuilder {
+    public static class BerserkerBuilder {
         private String nombre;
         private Arma arma;
         private Armadura armadura;
 
-        public GuerreroBuilder conNombre(String nombre) {
+        public BerserkerBuilder conNombre(String nombre) {
             this.nombre = nombre;
             return this;
         }
 
-        public GuerreroBuilder conArma(Arma arma) {
+        public BerserkerBuilder conArma(Arma arma) {
             this.arma = arma;
             return this;
         }
 
-        public GuerreroBuilder conArmadura(Armadura armadura) {
+        public BerserkerBuilder conArmadura(Armadura armadura) {
             this.armadura = armadura;
             return this;
         }
 
-        public Guerrero build() {
-            return new Guerrero(nombre, arma, armadura);
+        public Berserker build() {
+            return new Berserker(nombre, arma, armadura);
         }
     }
 }
