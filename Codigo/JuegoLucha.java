@@ -17,7 +17,6 @@ class JuegoLucha {
         if (atacante instanceof Mochila) {
             Mochila m = (Mochila) atacante;
             boolean puedeCurar = m.tienePocion();
-            int totalOpciones = atacante.getAtaques().size() + (puedeCurar ? 1 : 0);
             System.out.println("Elige la acción para " + atacante.getNombre() + ":");
             System.out.println("1. Atacar");
             if (puedeCurar) {
