@@ -1,5 +1,5 @@
 import java.util.List;
-import java.util.Random;
+import java.util.Scanner;
 
 abstract class Personaje {
     protected String nombre;
@@ -22,7 +22,7 @@ abstract class Personaje {
     }
 
     // Metodo abstracto para realizar un ataque a otro personaje
-    public abstract void atacar(Personaje oponente);
+    public abstract void atacar(Personaje oponente, Scanner scanner);
 
     // Metodo para recibir daño
     public void recibirDaño(int daño) {

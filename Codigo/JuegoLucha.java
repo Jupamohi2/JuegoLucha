@@ -10,47 +10,49 @@ class JuegoLucha {
         this.jugador2 = jugador2;
     }
 
-    // Metodo para elegir el ataque
-    private int elegirAtaque(Scanner scanner, Personaje atacante) {
-        System.out.println("Elige el ataque para " + atacante.getNombre() + ":");
-        for (int i = 0; i < atacante.getAtaques().size(); i++) {
-            Ataque atk = atacante.getAtaques().get(i);
-            System.out.println((i + 1) + ". " + atk.getNombre() + " | Daño base: " + atk.getDanoBase() + " + Daño arma: " + atacante.getArma().getDano()
-                    + " | Prob. crítico: " + (int) (atk.getProbCritico() * 100) + "% | Multiplicador crítico: x" + atk.getMultiplicadorCritico());
-        }
-        int idx = -1;
-        boolean valido = false;
-        while (!valido) {
-            System.out.print("Selecciona el número de ataque: ");
-            idx = scanner.nextInt() - 1;
-            scanner.nextLine();
-            if (idx >= 0 && idx < atacante.getAtaques().size()) {
-                valido = true;
-            } else {
-                System.out.println("Opción inválida. Intenta de nuevo.");
-            }
-        }
-        return idx;
-    }
-
-    // Metodo que representa un turno de ataque
+    // Modificado: turno permite usar poción como acción
     private void turno(Personaje atacante, Personaje defensor, Scanner scanner) {
-        System.out.println("Turno de " + atacante.getNombre() + ". Puntos de vida de " + defensor.getNombre() + ": "
-                + defensor.getPuntosDeVida() + "/" + defensor.getVidaMaxima());
-        int idxAtaque = elegirAtaque(scanner, atacante);
-        Ataque ataque = atacante.getAtaques().get(idxAtaque);
-        int danoTotal = ataque.getDanoBase() + atacante.getArma().getDano();
-        boolean critico = Math.random() < ataque.getProbCritico();
-        if (critico) {
-            danoTotal = (int) (danoTotal * ataque.getMultiplicadorCritico());
-            System.out.println("¡CRÍTICO! El ataque inflige daño multiplicado.");
+        System.out.println("\u001B[32mTurno de " + atacante.getNombre() + ". Puntos de vida de " + defensor.getNombre() + ": "
+        + defensor.getPuntosDeVida() + "/" + defensor.getVidaMaxima() + "\u001B[0m");
+        if (atacante instanceof Mochila) {
+            Mochila m = (Mochila) atacante;
+            boolean puedeCurar = m.tienePocion();
+            int totalOpciones = atacante.getAtaques().size() + (puedeCurar ? 1 : 0);
+            System.out.println("Elige la acción para " + atacante.getNombre() + ":");
+            System.out.println("1. Atacar");
+            if (puedeCurar) {
+                System.out.println("2. Usar poción de curación (+30 vida, 1 solo uso)");
+            }
+            int idx = -1;
+            boolean valido = false;
+            while (!valido) {
+                System.out.print("Selecciona el número de acción: ");
+                idx = scanner.nextInt();
+                scanner.nextLine();
+                if (idx == 1) {
+                    valido = true;
+                } else if (puedeCurar && idx == 2) {
+                    valido = true;
+                } else {
+                    System.out.println("Opción inválida. Intenta de nuevo.");
+                }
+            }
+            if (puedeCurar && idx == 2) {
+                boolean usada = m.usarPocion();
+                if (usada) {
+                    System.out.println("¡Has usado tu turno para curarte!");
+                } else {
+                    System.out.println("No se pudo usar la poción. Pierdes el turno.");
+                }
+                return;
+            } else {
+                atacante.atacar(defensor, scanner);
+            }
+        } else {
+            atacante.atacar(defensor, scanner);
         }
-        defensor.recibirDano(danoTotal);
-        System.out.println(atacante.getNombre() + " usa " + ataque.getNombre() + " y causa " + danoTotal + " puntos de daño (arma: " + atacante.getArma().getNombre() + ").");
-        System.out.println(defensor.getNombre() + " ahora tiene " + defensor.getPuntosDeVida() + "/" + defensor.getVidaMaxima() + " puntos de vida.");
     }
 
-    // Metodo principal que ejecuta el juego
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -101,7 +103,7 @@ class JuegoLucha {
             System.out.print("Elige la armadura: ");
             int armaduraIdx = scanner.nextInt() - 1;
             scanner.nextLine();
-            jugador1 = new MagoBuilder()
+            jugador1 = new Mago.MagoBuilder()
                     .conNombre(nombre1)
                     .conArma(armasMago[armaIdx])
                     .conArmadura(armadurasMago[armaduraIdx])
@@ -122,12 +124,14 @@ class JuegoLucha {
             System.out.print("Elige la armadura: ");
             int armaduraIdx = scanner.nextInt() - 1;
             scanner.nextLine();
-            jugador1 = new GuerreroBuilder()
+            jugador1 = new Guerrero.GuerreroBuilder()
                     .conNombre(nombre1)
                     .conArma(armasGuerrero[armaIdx])
                     .conArmadura(armadurasGuerrero[armaduraIdx])
                     .build();
         }
+        // Decorar con mochila
+        jugador1 = new Mochila(jugador1);
 
         // --- JUGADOR 2 ---
         System.out.print("Introduce el nombre del jugador 2: ");
@@ -152,7 +156,7 @@ class JuegoLucha {
             System.out.print("Elige la armadura: ");
             int armaduraIdx = scanner.nextInt() - 1;
             scanner.nextLine();
-            jugador2 = new MagoBuilder()
+            jugador2 = new Mago.MagoBuilder()
                     .conNombre(nombre2)
                     .conArma(armasMago[armaIdx])
                     .conArmadura(armadurasMago[armaduraIdx])
@@ -173,12 +177,14 @@ class JuegoLucha {
             System.out.print("Elige la armadura: ");
             int armaduraIdx = scanner.nextInt() - 1;
             scanner.nextLine();
-            jugador2 = new GuerreroBuilder()
+            jugador2 = new Guerrero.GuerreroBuilder()
                     .conNombre(nombre2)
                     .conArma(armasGuerrero[armaIdx])
                     .conArmadura(armadurasGuerrero[armaduraIdx])
                     .build();
         }
+        // Decorar con mochila
+        jugador2 = new Mochila(jugador2);
 
         // Crea el juego con los personajes seleccionados y comienza la pelea
         JuegoLucha juego = new JuegoLucha(jugador1, jugador2);
