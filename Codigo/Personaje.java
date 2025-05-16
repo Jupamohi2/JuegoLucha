@@ -76,15 +76,4 @@ abstract class Personaje {
         return vidaMaxima;
     }
 
-    public void inicializarUsosEspeciales() {
-        // Por defecto, no hace nada. Las subclases pueden sobrescribirlo.
-    }
-
-    public boolean puedeUsarAtaque(Ataque ataque) {
-        return true; // Siempre puede usar el ataque, ya no hay límite de usos
-    }
-
-    public void registrarUsoAtaque(Ataque ataque) {
-        // Ya no es necesario, pero se deja el método por si acaso
-    }
 }
