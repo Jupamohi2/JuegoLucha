@@ -24,18 +24,6 @@ abstract class Personaje {
     // Metodo abstracto para realizar un ataque a otro personaje
     public abstract void atacar(Personaje oponente, Scanner scanner);
 
-    // Metodo para recibir daño
-    public void recibirDaño(int daño) {
-        int dañoReducido = daño - (armadura != null ? armadura.getProteccion() : 0);
-        if (dañoReducido < 0)
-            dañoReducido = 0;
-        this.puntosDeVida -= dañoReducido;
-        if (this.puntosDeVida < 0) {
-            this.puntosDeVida = 0; // No se puede tener menos de 0 puntos de vida
-        }
-        System.out.println(this.nombre + " recibe " + dañoReducido + " puntos de daño tras protección de armadura.");
-    }
-
     // Metodo para recibir daño (sin reducción por armadura)
     public void recibirDano(int dano) {
         this.puntosDeVida -= dano;
